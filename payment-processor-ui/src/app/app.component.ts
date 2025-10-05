@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
@@ -11,10 +10,9 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './app.component.scss',
   standalone: true,
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'payment-processor';
-  defaultTestData = true;
-  // bound to the checkbox in the template
+  defaultTestData = false;
   sameAsShipping = false;
 
   testShippingDetails = {
@@ -42,7 +40,6 @@ export class AppComponent implements OnInit {
     paymentRequested: 49.99,
   };
 
-  // Template-driven model used by [(ngModel)] bindings
   formModel: any = {
     shippingFullName: '',
     shippingEmail: '',
@@ -65,12 +62,39 @@ export class AppComponent implements OnInit {
     paymentRequested: 0,
   };
 
+  /*
+   * Standlone component means we are injecting http client directly.
+   * As the application grows, this would be consolidating into a service handling API calls.
+   */
   constructor(private http: HttpClient) {}
 
-  ngOnInit(): void {
+  /*
+   * Billing address can be quickly filled out from shipping address.
+   */
+  onSameAsShippingChange() {
+    if (this.sameAsShipping) {
+      this.formModel.billingFullName = this.formModel.shippingFullName;
+      this.formModel.billingAddress = this.formModel.shippingAddress;
+      this.formModel.billingCity = this.formModel.shippingCity;
+      this.formModel.billingState = this.formModel.shippingState;
+      this.formModel.billingZip = this.formModel.shippingZip;
+      this.formModel.billingCountry = this.formModel.shippingCountry;
+    } else {
+      this.formModel.billingFullName = '';
+      this.formModel.billingAddress = '';
+      this.formModel.billingCity = '';
+      this.formModel.billingState = '';
+      this.formModel.billingZip = '';
+      this.formModel.billingCountry = '';
+    }
+  }
+
+  /*
+   * Test data for demonstration purposes.
+   */
+  loadDefaultData() {
     if (this.defaultTestData) {
-      // populate the formModel with the test data
-      this.sameAsShipping = false;
+      this.sameAsShipping = true;
       this.formModel.shippingFullName = this.testShippingDetails.fullName;
       this.formModel.shippingEmail = this.testShippingDetails.email;
       this.formModel.shippingPhone = this.testShippingDetails.phone;
@@ -91,33 +115,39 @@ export class AppComponent implements OnInit {
       this.formModel.cardName = this.testBillingDetails.cardName;
       this.formModel.expiryDate = this.testBillingDetails.expiryDate;
       this.formModel.cvv = this.testBillingDetails.cvv;
-      this.formModel.paymentRequested = this.testBillingDetails.paymentRequested;
-    }
-  }
-
-  onSameAsShippingChange() {
-    if(this.sameAsShipping) {
-      this.formModel.billingFullName = this.formModel.shippingFullName;
-      this.formModel.billingAddress = this.formModel.shippingAddress;
-      this.formModel.billingCity = this.formModel.shippingCity;
-      this.formModel.billingState = this.formModel.shippingState;
-      this.formModel.billingZip = this.formModel.shippingZip;
-      this.formModel.billingCountry = this.formModel.shippingCountry;
-        } else {
-      this.formModel.billingFullName = '';
-      this.formModel.billingAddress = '';
-      this.formModel.billingCity = '';
-      this.formModel.billingState = '';
-      this.formModel.billingZip = '';
-      this.formModel.billingCountry = '';
+      this.formModel.paymentRequested =
+        this.testBillingDetails.paymentRequested;
+    } else {
+      this.formModel = {
+        shippingFullName: '',
+        shippingEmail: '',
+        shippingPhone: '',
+        shippingAddress: '',
+        shippingCity: '',
+        shippingState: '',
+        shippingZip: '',
+        shippingCountry: '',
+        billingFullName: '',
+        billingAddress: '',
+        billingCity: '',
+        billingState: '',
+        billingZip: '',
+        billingCountry: '',
+        cardNumber: '',
+        cardName: '',
+        expiryDate: '',
+        cvv: '',
+        paymentRequested: 0,
+      };
+      this.sameAsShipping = false;
     }
   }
 
   // Called from the template-driven form on submit
   onSubmit(form: NgForm) {
     /*
-    * Disabled the validation check to demonstrate successful and error responses.
-    */
+     * Disabled the validation check to demonstrate better demonstrate response variations.
+     */
     // if (!form || !form.valid) {
     //   console.warn('Form is invalid or not passed to onSubmit', form);
     //   return;
@@ -138,14 +168,18 @@ export class AppComponent implements OnInit {
 
     const billingDetails = {
       fullName:
-        v.billingFullName || (this.sameAsShipping ? shippingDetails.fullName : ''),
+        v.billingFullName ||
+        (this.sameAsShipping ? shippingDetails.fullName : ''),
       address:
-        v.billingAddress || (this.sameAsShipping ? shippingDetails.address : ''),
+        v.billingAddress ||
+        (this.sameAsShipping ? shippingDetails.address : ''),
       city: v.billingCity || (this.sameAsShipping ? shippingDetails.city : ''),
       state:
         v.billingState || (this.sameAsShipping ? shippingDetails.state : ''),
       zip: v.billingZip || (this.sameAsShipping ? shippingDetails.zip : ''),
-      country: v.billingCountry || (this.sameAsShipping ? shippingDetails.country : ''),
+      country:
+        v.billingCountry ||
+        (this.sameAsShipping ? shippingDetails.country : ''),
       cardNumber: v.cardNumber || '',
       cardName: v.cardName || '',
       expiryDate: v.expiryDate || '',
@@ -158,14 +192,19 @@ export class AppComponent implements OnInit {
       billingDetails,
     };
 
-    // Backend endpoint (matches server-side controller mapping)
+    /*
+     * Backend endpoint (matches server-side controller mapping)
+     */
     const url = '/payment-processor/authorization';
 
+    /*
+    * Headers specificying content type and initial mock up of auth token.
+    */ 
     const headers = new HttpHeaders()
-      .set('Authorization', 'Bearer yourAuthToken123') // Example: setting an Authorization header
-      .set('Content-Type', 'application/json')        // Example: setting Content-Type
+      .set('Authorization', 'Bearer authToken123')
+      .set('Content-Type', 'application/json');
 
-    this.http.post(url, payload).subscribe({
+    this.http.post(url, payload, { headers }).subscribe({
       next: (res) => {
         console.log('Payment authorization response:', res);
       },

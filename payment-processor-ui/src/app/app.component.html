@@ -1,13 +1,37 @@
 <div class="checkout-container">
   <form #checkoutForm="ngForm" (ngSubmit)="onSubmit(checkoutForm)">
     <section class="cost-section">
-      <label for="paymentRequested">Payment Requested</label>
-      <input
-        id="paymentRequested"
-        name="paymentRequested"
-        [(ngModel)]="formModel.paymentRequested"
-        required
-      />
+      <span
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        "
+      >
+        <label for="paymentRequested">Payment Requested</label>
+        <input
+          id="paymentRequested"
+          name="paymentRequested"
+          [(ngModel)]="formModel.paymentRequested"
+          required
+        />
+        <span
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+          "
+        >
+          <input
+            type="checkbox"
+            id="loadDefaultData"
+            name="loadDefaultData"
+            [(ngModel)]="defaultTestData"
+            (change)="loadDefaultData()"
+          />
+          <label for="loadDefaultData">Load Default Data</label>
+        </span>
+      </span>
     </section>
 
     <!-- Shipping Section -->

@@ -15,17 +15,32 @@ public class PaymentProcessorServiceImpl implements PaymentProcessorService {
 
 	@Override
 	public void authorizePayment(PaymentAuthorizationDTO paymentAuthorization) {
+		/*
+		 * Shipping and Billing details are all validated here. An error in any field
+		 * results in an IllegalArgumentException, but all fields are still checked to
+		 * collect all validation errors.
+		 */
 		List<String> errors = new ArrayList<>();
 		errors.addAll(verifyShippingDetails(paymentAuthorization.getShippingDetails()));
 		errors.addAll(verifyBillingDetails(paymentAuthorization.getBillingDetails()));
 		if (!errors.isEmpty()) {
 			throw new IllegalArgumentException("Validation failed: " + String.join(" ", errors));
 		}
+		/*
+		 * Integrate with third-party credit card network here.
+		 */
 		connectToPaymentGateway(paymentAuthorization);
+		/*
+		 * Store payment authorization results in database here. Batch processing of
+		 * successful payment authorizations handled in different service.
+		 */
 		storePaymentAuthorizationResults(paymentAuthorization);
 	}
 
 	private List<String> verifyShippingDetails(ShippingDetails userDetails) {
+		/*
+		 * Basic validation of shipping details.
+		 */
 		List<String> errors = new ArrayList<>();
 		if (userDetails == null) {
 			errors.add("Shipping details are required.");
@@ -59,6 +74,9 @@ public class PaymentProcessorServiceImpl implements PaymentProcessorService {
 	}
 
 	private List<String> verifyBillingDetails(BillingDetails paymentDetails) {
+		/*
+		 * Basic validation of billing details.
+		 */
 		List<String> errors = new ArrayList<>();
 		if (paymentDetails == null) {
 			errors.add("Billing details are required.");
@@ -103,10 +121,10 @@ public class PaymentProcessorServiceImpl implements PaymentProcessorService {
 	private boolean isNullOrEmpty(String value) {
 		return value == null || value.trim().isEmpty();
 	}
-	
+
 	private void storePaymentAuthorizationResults(PaymentAuthorizationDTO paymentAuthorization) {
 		// Database storage logic here.
-		System.out.println("Payment authorization results stored successfully.");		
+		System.out.println("Payment authorization results stored successfully.");
 	}
 
 	private void connectToPaymentGateway(PaymentAuthorizationDTO paymentAuthorization) {
