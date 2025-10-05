@@ -1,0 +1,162 @@
+
+/* Vertical, themed checkout page styles */
+
+:root {
+	--brand-50: #eaf2ff;
+	--brand-100: #d6e8ff;
+	--brand-500: #0a5cff;
+	--brand-600: #084bbf;
+	--muted: #6b7280;
+	--bg: #f5f7fb;
+	--surface: #ffffff;
+	--danger: #e02424;
+	--radius-lg: 12px;
+}
+
+:host {
+	display: flex;
+	min-height: 100vh; /* fill viewport */
+	align-items: center; /* vertical center */
+	justify-content: center;
+	padding: 2rem 1rem;
+	background: linear-gradient(180deg, #f7fbff 0%, var(--bg) 100%);
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+	color: #0f172a;
+}
+
+.checkout-container {
+	width: 100%;
+	max-width: 820px;
+	margin: 0 auto;
+	background: var(--surface);
+	border-radius: var(--radius-lg);
+	padding: 1.25rem;
+	box-shadow: 0 18px 50px rgba(15,23,42,0.08);
+	border: 1px solid rgba(15,23,42,0.03);
+}
+
+/* Stack sections vertically */
+form {
+	display: block;
+}
+
+section {
+	background: transparent;
+	padding: 1rem;
+	border-radius: 10px;
+	margin-bottom: 1rem;
+}
+
+.shipping-section {
+	border: 1px solid rgba(15,23,42,0.04);
+	background: linear-gradient(180deg, rgba(234,242,255,0.35), transparent);
+}
+
+.billing-section {
+	border: 1px solid rgba(15,23,42,0.04);
+	background: rgba(250,251,255,0.6);
+}
+
+h2 {
+	margin: 0 0 0.5rem 0;
+	font-size: 1.125rem;
+	font-weight: 700;
+	color: var(--brand-600);
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+label {
+	display: block;
+	font-size: 0.875rem;
+	color: var(--muted);
+	margin-bottom: 0.25rem;
+}
+
+/* Two-column rows inside sections for medium/large screens */
+.row {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 1rem;
+}
+
+/* Fallback for simple div wrapper usage in template */
+section > div {
+	margin-bottom: 0.75rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input:not([type="checkbox"]),
+select,
+textarea {
+	width: 100%;
+	padding: 0.6rem 0.75rem;
+	border-radius: 8px;
+	border: 1px solid rgba(15,23,42,0.08);
+	background: #fff;
+	box-sizing: border-box;
+	font-size: 0.95rem;
+	color: #0f172a;
+}
+
+input:focus, select:focus, textarea:focus {
+	outline: none;
+	border-color: var(--brand-500);
+	box-shadow: 0 8px 26px rgba(10,92,255,0.06);
+}
+
+/* Checkbox */
+input[type="checkbox"] {
+	width: 18px;
+	height: 18px;
+	margin-right: 0.5rem;
+}
+
+/* Buttons */
+.form-actions {
+	display: flex;
+	justify-content: flex-end;
+	gap: 0.75rem;
+	margin-top: 0.5rem;
+}
+
+button {
+	padding: 0.6rem 1rem;
+	border-radius: 8px;
+	border: none;
+	font-weight: 700;
+	cursor: pointer;
+}
+
+// button[type="submit"] {
+// 	background: var(--brand-500);
+// 	color: white;
+// 	color: #0f172a;
+// 	box-shadow: 0 10px 30px rgba(10,92,255,0.12);
+// }
+
+button[disabled] {
+	opacity: 0.6;
+	cursor: not-allowed;
+}
+
+button.cancel {
+	background: transparent;
+	color: var(--muted);
+	border: 1px solid rgba(15,23,42,0.06);
+}
+
+/* Responsive: collapse rows to single column on narrow screens */
+@media (max-width: 720px) {
+	.row {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* Micro helpers */
+.helper { font-size: 0.85rem; color: var(--muted); }
+.muted { color: var(--muted); }
+

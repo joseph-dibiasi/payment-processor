@@ -1,0 +1,218 @@
+<div class="checkout-container">
+  <form #checkoutForm="ngForm" (ngSubmit)="onSubmit(checkoutForm)">
+    <section class="cost-section">
+      <label for="paymentRequested">Payment Requested</label>
+      <input
+        id="paymentRequested"
+        name="paymentRequested"
+        [(ngModel)]="formModel.paymentRequested"
+        required
+      />
+    </section>
+
+    <!-- Shipping Section -->
+    <section class="shipping-section">
+      <h2>Shipping</h2>
+      <div>
+        <label for="shippingFullName">Full Name</label>
+        <input
+          id="shippingFullName"
+          name="shippingFullName"
+          [(ngModel)]="formModel.shippingFullName"
+          required
+        />
+      </div>
+      <div>
+        <label for="shippingEmail">Email</label>
+        <input
+          id="shippingEmail"
+          name="shippingEmail"
+          type="email"
+          [(ngModel)]="formModel.shippingEmail"
+          required
+        />
+      </div>
+      <div>
+        <label for="shippingPhone">Phone</label>
+        <input
+          id="shippingPhone"
+          name="shippingPhone"
+          type="tel"
+          [(ngModel)]="formModel.shippingPhone"
+          required
+        />
+      </div>
+      <div>
+        <label for="shippingAddress">Address</label>
+        <input
+          id="shippingAddress"
+          name="shippingAddress"
+          [(ngModel)]="formModel.shippingAddress"
+          required
+        />
+      </div>
+      <div>
+        <label for="shippingCity">City</label>
+        <input
+          id="shippingCity"
+          name="shippingCity"
+          [(ngModel)]="formModel.shippingCity"
+          required
+        />
+      </div>
+      <div>
+        <label for="shippingState">State</label>
+        <input
+          id="shippingState"
+          name="shippingState"
+          [(ngModel)]="formModel.shippingState"
+          required
+        />
+      </div>
+      <div>
+        <label for="shippingZip">Zip Code</label>
+        <input
+          id="shippingZip"
+          name="shippingZip"
+          [(ngModel)]="formModel.shippingZip"
+          required
+        />
+      </div>
+      <div>
+        <label for="shippingCountry">Country</label>
+        <input
+          id="shippingCountry"
+          name="shippingCountry"
+          [(ngModel)]="formModel.shippingCountry"
+          required
+        />
+      </div>
+    </section>
+
+    <!-- Billing Section -->
+    <section class="billing-section">
+      <span
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        "
+      >
+        <h2>Billing</h2>
+        <span
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+          "
+        >
+          <input
+            type="checkbox"
+            id="sameAsShipping"
+            name="sameAsShipping"
+            [(ngModel)]="sameAsShipping"
+            (change)="onSameAsShippingChange()"
+          />
+          <label for="sameAsShipping">Same as Shipping</label>
+        </span>
+      </span>
+
+      <div>
+        <label for="billingFullName">Full Name</label>
+        <input
+          id="billingFullName"
+          name="billingFullName"
+          [(ngModel)]="formModel.billingFullName"
+          required
+        />
+      </div>
+      <div>
+        <label for="billingAddress">Address</label>
+        <input
+          id="billingAddress"
+          name="billingAddress"
+          [(ngModel)]="formModel.billingAddress"
+          required
+        />
+      </div>
+      <div>
+        <label for="billingCity">City</label>
+        <input
+          id="billingCity"
+          name="billingCity"
+          [(ngModel)]="formModel.billingCity"
+          required
+        />
+      </div>
+      <div>
+        <label for="billingState">State</label>
+        <input
+          id="billingState"
+          name="billingState"
+          [(ngModel)]="formModel.billingState"
+          required
+        />
+      </div>
+      <div>
+        <label for="billingZip">Zip Code</label>
+        <input
+          id="billingZip"
+          name="billingZip"
+          [(ngModel)]="formModel.billingZip"
+          required
+        />
+      </div>
+      <div>
+        <label for="billingCountry">Country</label>
+        <input
+          id="billingCountry"
+          name="billingCountry"
+          [(ngModel)]="formModel.billingCountry"
+          required
+        />
+      </div>
+      <div>
+        <label for="cardNumber">Card Number</label>
+        <input
+          id="cardNumber"
+          name="cardNumber"
+          [(ngModel)]="formModel.cardNumber"
+          required
+          maxlength="19"
+        />
+      </div>
+      <div>
+        <label for="cardName">Name on Card</label>
+        <input
+          id="cardName"
+          name="cardName"
+          [(ngModel)]="formModel.cardName"
+          required
+        />
+      </div>
+      <div>
+        <label for="expiryDate">Expiry Date</label>
+        <input
+          id="expiryDate"
+          name="expiryDate"
+          [(ngModel)]="formModel.expiryDate"
+          placeholder="MM/YY"
+          required
+        />
+      </div>
+      <div>
+        <label for="cvv">CVV</label>
+        <input
+          id="cvv"
+          name="cvv"
+          [(ngModel)]="formModel.cvv"
+          required
+          maxlength="4"
+        />
+      </div>
+    </section>
+    <button>Cancel</button>
+    <!-- <button type="submit" [disabled]="!checkoutForm.form.valid">Checkout</button> -->
+    <button type="submit">Checkout</button>
+  </form>
+</div>
