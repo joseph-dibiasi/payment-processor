@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 public class PaymentProcessorController {
-	private static final String BASE_URL = "/payment-processor";
+	private static final String BASE_URL = "/api/payment-processor";
 	private final PaymentProcessorService paymentProcessorService;
 
 	public PaymentProcessorController(PaymentProcessorService birdInTheHandService) {
@@ -25,7 +25,7 @@ public class PaymentProcessorController {
 	private static final String BEARER_PREFIX = "Bearer ";
 	private static final String EXPECTED_TOKEN = "authToken123";
 
-	@PostMapping(BASE_URL + "/authorization")
+	@PostMapping(BASE_URL + "/make-payment")
 	public ResponseEntity<ResponseObject> paymentAuthorization(HttpServletRequest request,
 			@RequestBody PaymentAuthorizationDTO paymentAuthorization) {
 

@@ -4,13 +4,13 @@ import { NgForm } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-root',
+  selector: 'payment',
   imports: [FormsModule],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+  templateUrl: './payment.html',
+  styleUrl: './payment.scss',
   standalone: true,
 })
-export class AppComponent {
+export class Payment {
   title = 'payment-processor';
   defaultTestData = false;
   sameAsShipping = false;
@@ -33,7 +33,7 @@ export class AppComponent {
     state: 'IL',
     zip: '62704',
     country: 'USA',
-    cardNumber: '4111111111111111',
+    cardNumber: '1111 1111 1111 1111',
     cardName: 'John Doe',
     expiryDate: '12/25',
     cvv: '123',
@@ -145,13 +145,10 @@ export class AppComponent {
 
   // Called from the template-driven form on submit
   onSubmit(form: NgForm) {
-    /*
-     * Disabled the validation check to demonstrate better demonstrate response variations.
-     */
-    // if (!form || !form.valid) {
-    //   console.warn('Form is invalid or not passed to onSubmit', form);
-    //   return;
-    // }
+    if (!form || !form.valid) {
+      console.warn('Form is invalid or not passed to onSubmit', form);
+      return;
+    }
 
     const v = this.formModel || form.value || {};
 
@@ -195,7 +192,7 @@ export class AppComponent {
     /*
      * Backend endpoint (matches server-side controller mapping)
      */
-    const url = '/payment-processor/authorization';
+    const url = '/payment-processor/make-payment';
 
     /*
     * Headers specificying content type and initial mock up of auth token.
