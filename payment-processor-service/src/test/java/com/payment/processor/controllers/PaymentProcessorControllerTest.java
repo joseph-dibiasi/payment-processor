@@ -18,6 +18,12 @@ import com.payment.processor.services.PaymentProcessorService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+/**
+ * Test class for PaymentProcessorController methods.
+ *
+ * @author Joseph DiBiasi
+ * @version 1.0
+ */
 class PaymentProcessorControllerTest {
 
     private PaymentProcessorService paymentProcessorService;

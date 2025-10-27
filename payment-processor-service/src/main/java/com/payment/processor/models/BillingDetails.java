@@ -1,112 +1,84 @@
 package com.payment.processor.models;
 
+import java.util.UUID;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+
 /**
- * Represents billing/payment details sent from the client.
+ * Model representing Billing/credit card information sent from the client.
+ *
+ * @author Joseph DiBiasi
+ * @version 1.0
  */
+@Entity
+@Table(name = "billing_details")
 public class BillingDetails {
 
-	private String fullName;
-	private String address;
-	private String city;
-	private String state;
-	private String zip;
-	private String country;
+    @Id
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name = "id", updatable = false, nullable = false)
+    private UUID id;
 
-	private String cardNumber;
-	private String cardName;
-	private String expiryDate;
-	private String cvv;
-	private Integer paymentRequested;
+    @Column(name = "first_name")
+    private String firstName;
 
-	public BillingDetails() {
-	}
+    @Column(name = "last_name")
+    private String lastName;
 
-	public String getFullName() {
-		return fullName;
-	}
+    private String address;
+    private String city;
+    private String state;
+    private String zip;
+    private String country;
 
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
-	}
+    @Column(name = "card_number")
+    private String cardNumber;
 
-	public String getAddress() {
-		return address;
-	}
+    @Column(name = "card_name")
+    private String cardName;
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
+    @Column(name = "expiration_date")
+    private String expirationDate;
 
-	public String getCity() {
-		return city;
-	}
+    private String cvv;
 
-	public void setCity(String city) {
-		this.city = city;
-	}
+    @Column(name = "amount_requested")
+    private Integer amountRequested;
 
-	public String getState() {
-		return state;
-	}
+    public BillingDetails() {}
 
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	public String getZip() {
-		return zip;
-	}
-
-	public void setZip(String zip) {
-		this.zip = zip;
-	}
-
-	public String getCountry() {
-		return country;
-	}
-
-	public void setCountry(String country) {
-		this.country = country;
-	}
-
-	public String getCardNumber() {
-		return cardNumber;
-	}
-
-	public void setCardNumber(String cardNumber) {
-		this.cardNumber = cardNumber;
-	}
-
-	public String getCardName() {
-		return cardName;
-	}
-
-	public void setCardName(String cardName) {
-		this.cardName = cardName;
-	}
-
-	public String getExpiryDate() {
-		return expiryDate;
-	}
-
-	public void setExpiryDate(String expiryDate) {
-		this.expiryDate = expiryDate;
-	}
-
-	public String getCvv() {
-		return cvv;
-	}
-
-	public void setCvv(String cvv) {
-		this.cvv = cvv;
-	}
-
-	public Integer getPaymentRequested() {
-		return paymentRequested;
-	}
-
-	public void setPaymentRequested(Integer paymentRequested) {
-		this.paymentRequested = paymentRequested;
-	}
-
+    // getters / setters ...
+    public UUID getId() { return id; }
+    public void setId(UUID id) { this.id = id; }
+    public String getFirstName() { return firstName; }
+    public void setFirstName(String firstName) { this.firstName = firstName; }
+    public String getLastName() { return lastName; }
+    public void setLastName(String lastName) { this.lastName = lastName; }
+    public String getAddress() { return address; }
+    public void setAddress(String address) { this.address = address; }
+    public String getCity() { return city; }
+    public void setCity(String city) { this.city = city; }
+    public String getState() { return state; }
+    public void setState(String state) { this.state = state; }
+    public String getZip() { return zip; }
+    public void setZip(String zip) { this.zip = zip; }
+    public String getCountry() { return country; }
+    public void setCountry(String country) { this.country = country; }
+    public String getCardNumber() { return cardNumber; }
+    public void setCardNumber(String cardNumber) { this.cardNumber = cardNumber; }
+    public String getCardName() { return cardName; }
+    public void setCardName(String cardName) { this.cardName = cardName; }
+    public String getExpiryDate() { return expirationDate; }
+    public void setExpiryDate(String expirationDate) { this.expirationDate = expirationDate; }
+    public String getCvv() { return cvv; }
+    public void setCvv(String cvv) { this.cvv = cvv; }
+    public Integer getAmountRequested() { return amountRequested; }
+    public void setAmountRequested(Integer amountRequested) { this.amountRequested = amountRequested; }
 }

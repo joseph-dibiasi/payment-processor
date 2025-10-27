@@ -1,7 +1,10 @@
 package com.payment.processor.models;
 
 /**
- * Top-level DTO matching the frontend payload which contains shippingDetails and billingDetails.
+ * DTO class matching the front end payload containing ShippingDetails and BillingDetails.
+ *
+ * @author Joseph DiBiasi
+ * @version 1.0
  */
 public class PaymentAuthorizationDTO {
 

@@ -8,11 +8,11 @@
           justify-content: space-between;
         "
       >
-        <label for="paymentRequested">Payment Requested</label>
+        <label for="amountRequested">Payment Amount Requested</label>
         <input
-          id="paymentRequested"
-          name="paymentRequested"
-          [(ngModel)]="formModel.paymentRequested"
+          id="amountRequested"
+          name="amountRequested"
+          [(ngModel)]="formModel.amountRequested"
           required
         />
         <span
@@ -38,13 +38,22 @@
     <section class="shipping-section">
       <h2>Shipping</h2>
       <div>
-        <label for="shippingFullName">Full Name</label>
-        <input
-          id="shippingFullName"
-          name="shippingFullName"
-          [(ngModel)]="formModel.shippingFullName"
-          required
-        />
+        <span>
+          <label for="shippingFirstName">First Name</label>
+          <input
+            id="shippingFirstName"
+            name="shippingFirstName"
+            [(ngModel)]="formModel.shippingFirstName"
+            required
+          />
+          <label for="shippingLastName">Last Name</label>
+          <input
+            id="shippingLastName"
+            name="shippingLastName"
+            [(ngModel)]="formModel.shippingLastName"
+            required
+          />
+        </span>
       </div>
       <div>
         <label for="shippingEmail">Email</label>
@@ -142,13 +151,22 @@
       </span>
 
       <div>
-        <label for="billingFullName">Full Name</label>
-        <input
-          id="billingFullName"
-          name="billingFullName"
-          [(ngModel)]="formModel.billingFullName"
-          required
-        />
+        <span>
+          <label for="billingFirstName">First Name</label>
+          <input
+            id="billingFirstName"
+            name="billingFirstName"
+            [(ngModel)]="formModel.billingFirstName"
+            required
+          />
+          <label for="billingLastName">Last Name</label>
+          <input
+            id="billingLastName"
+            name="billingLastName"
+            [(ngModel)]="formModel.billingLastName"
+            required
+          />
+        </span>
       </div>
       <div>
         <label for="billingAddress">Address</label>
@@ -236,7 +254,9 @@
       </div>
     </section>
     <button>Cancel</button>
-    <button type="submit" [disabled]="!checkoutForm.form.valid">Checkout</button>
+    <button type="submit" [disabled]="!checkoutForm.form.valid">
+      Checkout
+    </button>
     <!-- <button type="submit">Checkout</button> -->
   </form>
 </div>

@@ -16,7 +16,8 @@ export class Payment {
   sameAsShipping = false;
 
   testShippingDetails = {
-    fullName: 'John Doe',
+    firstName: 'John',
+    lastName: 'Doe',
     email: 'john.doe@example.com',
     phone: '555-123-4567',
     address: '123 Main St',
@@ -27,21 +28,23 @@ export class Payment {
   };
 
   testBillingDetails = {
-    fullName: 'John Doe',
+    firstName: 'John',
+    lastName: 'Doe',
     address: '123 Main St',
     city: 'Springfield',
     state: 'IL',
     zip: '62704',
     country: 'USA',
-    cardNumber: '1111 1111 1111 1111',
+    cardNumber: '1111-1111-1111-1111',
     cardName: 'John Doe',
     expiryDate: '12/25',
     cvv: '123',
-    paymentRequested: 49.99,
+    amountRequested: 49.99,
   };
 
   formModel: any = {
-    shippingFullName: '',
+    shippingFirstName: '',
+    shippingLastName: '',
     shippingEmail: '',
     shippingPhone: '',
     shippingAddress: '',
@@ -49,7 +52,8 @@ export class Payment {
     shippingState: '',
     shippingZip: '',
     shippingCountry: '',
-    billingFullName: '',
+    billingFirstName: '',
+    billingLastName: '',
     billingAddress: '',
     billingCity: '',
     billingState: '',
@@ -59,7 +63,7 @@ export class Payment {
     cardName: '',
     expiryDate: '',
     cvv: '',
-    paymentRequested: 0,
+    amountRequested: 0,
   };
 
   /*
@@ -73,14 +77,16 @@ export class Payment {
    */
   onSameAsShippingChange() {
     if (this.sameAsShipping) {
-      this.formModel.billingFullName = this.formModel.shippingFullName;
+      this.formModel.billingFirstName = this.formModel.shippingFirstName;
+      this.formModel.billingLastName = this.formModel.shippingLastName;
       this.formModel.billingAddress = this.formModel.shippingAddress;
       this.formModel.billingCity = this.formModel.shippingCity;
       this.formModel.billingState = this.formModel.shippingState;
       this.formModel.billingZip = this.formModel.shippingZip;
       this.formModel.billingCountry = this.formModel.shippingCountry;
     } else {
-      this.formModel.billingFullName = '';
+      this.formModel.billingFirstName = '';
+      this.formModel.billingLastName = '';
       this.formModel.billingAddress = '';
       this.formModel.billingCity = '';
       this.formModel.billingState = '';
@@ -95,7 +101,8 @@ export class Payment {
   loadDefaultData() {
     if (this.defaultTestData) {
       this.sameAsShipping = true;
-      this.formModel.shippingFullName = this.testShippingDetails.fullName;
+      this.formModel.shippingFirstName = this.testShippingDetails.firstName;
+      this.formModel.shippingLastName = this.testShippingDetails.lastName;
       this.formModel.shippingEmail = this.testShippingDetails.email;
       this.formModel.shippingPhone = this.testShippingDetails.phone;
       this.formModel.shippingAddress = this.testShippingDetails.address;
@@ -104,7 +111,8 @@ export class Payment {
       this.formModel.shippingZip = this.testShippingDetails.zip;
       this.formModel.shippingCountry = this.testShippingDetails.country;
 
-      this.formModel.billingFullName = this.testBillingDetails.fullName;
+      this.formModel.billingFirstName = this.testBillingDetails.firstName;
+      this.formModel.billingLastName = this.testBillingDetails.lastName;
       this.formModel.billingAddress = this.testBillingDetails.address;
       this.formModel.billingCity = this.testBillingDetails.city;
       this.formModel.billingState = this.testBillingDetails.state;
@@ -115,11 +123,12 @@ export class Payment {
       this.formModel.cardName = this.testBillingDetails.cardName;
       this.formModel.expiryDate = this.testBillingDetails.expiryDate;
       this.formModel.cvv = this.testBillingDetails.cvv;
-      this.formModel.paymentRequested =
-        this.testBillingDetails.paymentRequested;
+      this.formModel.amountRequested =
+        this.testBillingDetails.amountRequested;
     } else {
       this.formModel = {
-        shippingFullName: '',
+        shippingFirstName: '',
+        shippingLastName: '',
         shippingEmail: '',
         shippingPhone: '',
         shippingAddress: '',
@@ -127,7 +136,8 @@ export class Payment {
         shippingState: '',
         shippingZip: '',
         shippingCountry: '',
-        billingFullName: '',
+        billingFirstName: '',
+        billingLastName: '',
         billingAddress: '',
         billingCity: '',
         billingState: '',
@@ -137,7 +147,7 @@ export class Payment {
         cardName: '',
         expiryDate: '',
         cvv: '',
-        paymentRequested: 0,
+        amountRequested: 0,
       };
       this.sameAsShipping = false;
     }
@@ -153,7 +163,8 @@ export class Payment {
     const v = this.formModel || form.value || {};
 
     const shippingDetails = {
-      fullName: v.shippingFullName || '',
+      firstName: v.shippingFirstName || '',
+      lastName: v.shippingLastName || '',
       email: v.shippingEmail || '',
       phone: v.shippingPhone || '',
       address: v.shippingAddress || '',
@@ -164,9 +175,12 @@ export class Payment {
     };
 
     const billingDetails = {
-      fullName:
-        v.billingFullName ||
-        (this.sameAsShipping ? shippingDetails.fullName : ''),
+      firstName:
+        v.billingFirstName ||
+        (this.sameAsShipping ? shippingDetails.firstName : ''),
+      lastName:
+        v.billingLastName ||
+        (this.sameAsShipping ? shippingDetails.lastName : ''),
       address:
         v.billingAddress ||
         (this.sameAsShipping ? shippingDetails.address : ''),
@@ -181,7 +195,7 @@ export class Payment {
       cardName: v.cardName || '',
       expiryDate: v.expiryDate || '',
       cvv: v.cvv || '',
-      paymentRequested: v.paymentRequested || 0,
+      amountRequested: v.amountRequested || 0,
     };
 
     const payload = {

@@ -8,10 +8,27 @@ import org.springframework.stereotype.Service;
 import com.payment.processor.models.BillingDetails;
 import com.payment.processor.models.PaymentAuthorizationDTO;
 import com.payment.processor.models.ShippingDetails;
+import com.payment.processor.repositories.BillingDetailsRepository;
+import com.payment.processor.repositories.ShippingDetailsRepository;
 import com.payment.processor.services.PaymentProcessorService;
 
+/**
+ * Service layer, implementation of PaymentProcessor service logic.
+ *
+ * @author Joseph DiBiasi
+ * @version 1.0
+ */
 @Service
 public class PaymentProcessorServiceImpl implements PaymentProcessorService {
+	
+    private final BillingDetailsRepository billingDetailsRespository;
+    private final ShippingDetailsRepository shippingDetailsRespository;
+
+
+    public PaymentProcessorServiceImpl(BillingDetailsRepository billingDetailsRespository, ShippingDetailsRepository shippingDetailsRespository) {
+        this.billingDetailsRespository = billingDetailsRespository;
+        this.shippingDetailsRespository = shippingDetailsRespository;
+    }
 
 	@Override
 	public void authorizePayment(PaymentAuthorizationDTO paymentAuthorization) {
@@ -37,37 +54,40 @@ public class PaymentProcessorServiceImpl implements PaymentProcessorService {
 		storePaymentAuthorizationResults(paymentAuthorization);
 	}
 
-	private List<String> verifyShippingDetails(ShippingDetails userDetails) {
+	private List<String> verifyShippingDetails(ShippingDetails shippingDetails) {
 		/*
 		 * Basic validation of shipping details.
 		 */
 		List<String> errors = new ArrayList<>();
-		if (userDetails == null) {
+		if (shippingDetails == null) {
 			errors.add("Shipping details are required.");
 			return errors;
 		}
-		if (isNullOrEmpty(userDetails.getFullName())) {
-			errors.add("Shipping full name is required.");
+		if (isNullOrEmpty(shippingDetails.getFirstName())) {
+			errors.add("Shipping first name is required.");
 		}
-		if (isNullOrEmpty(userDetails.getEmail())) {
+		if (isNullOrEmpty(shippingDetails.getLastName())) {
+			errors.add("Shipping last name is required.");
+		}
+		if (isNullOrEmpty(shippingDetails.getEmail())) {
 			errors.add("Shipping email is required.");
 		}
-		if (isNullOrEmpty(userDetails.getPhone())) {
+		if (isNullOrEmpty(shippingDetails.getPhone())) {
 			errors.add("Shipping phone is required.");
 		}
-		if (isNullOrEmpty(userDetails.getAddress())) {
+		if (isNullOrEmpty(shippingDetails.getAddress())) {
 			errors.add("Shipping address is required.");
 		}
-		if (isNullOrEmpty(userDetails.getCity())) {
+		if (isNullOrEmpty(shippingDetails.getCity())) {
 			errors.add("Shipping city is required.");
 		}
-		if (isNullOrEmpty(userDetails.getState())) {
+		if (isNullOrEmpty(shippingDetails.getState())) {
 			errors.add("Shipping state is required.");
 		}
-		if (isNullOrEmpty(userDetails.getZip())) {
+		if (isNullOrEmpty(shippingDetails.getZip())) {
 			errors.add("Shipping zip is required.");
 		}
-		if (isNullOrEmpty(userDetails.getCountry())) {
+		if (isNullOrEmpty(shippingDetails.getCountry())) {
 			errors.add("Shipping country is required.");
 		}
 		return errors;
@@ -82,8 +102,11 @@ public class PaymentProcessorServiceImpl implements PaymentProcessorService {
 			errors.add("Billing details are required.");
 			return errors;
 		}
-		if (isNullOrEmpty(paymentDetails.getFullName())) {
-			errors.add("Billing full name is required.");
+		if (isNullOrEmpty(paymentDetails.getFirstName())) {
+			errors.add("Billing first name is required.");
+		}
+		if (isNullOrEmpty(paymentDetails.getLastName())) {
+			errors.add("Billing last name is required.");
 		}
 		if (isNullOrEmpty(paymentDetails.getAddress())) {
 			errors.add("Billing address is required.");
@@ -112,7 +135,7 @@ public class PaymentProcessorServiceImpl implements PaymentProcessorService {
 		if (isNullOrEmpty(paymentDetails.getCvv())) {
 			errors.add("Card CVV is required.");
 		}
-		if (paymentDetails.getPaymentRequested() == null || paymentDetails.getPaymentRequested() <= 0) {
+		if (paymentDetails.getAmountRequested() == null || paymentDetails.getAmountRequested() <= 0) {
 			errors.add("No payment amount requested.");
 		}
 		return errors;
@@ -124,7 +147,19 @@ public class PaymentProcessorServiceImpl implements PaymentProcessorService {
 
 	private void storePaymentAuthorizationResults(PaymentAuthorizationDTO paymentAuthorization) {
 		// Database storage logic here.
-		System.out.println("Payment authorization results stored successfully.");
+		try {
+			billingDetailsRespository.save(paymentAuthorization.getBillingDetails());			
+		} catch (Exception e) {
+			System.err.println("Error saving billing details: " + e.getMessage());
+			throw new RuntimeException("Failed to Store billing details.", e);
+		}
+//		try {
+//			shippingDetailsRespository.save(paymentAuthorization.getShippingDetails());
+//		} catch (Exception e) {
+//			System.err.println("Error saving shipping details: " + e.getMessage());
+//			throw new RuntimeException("Failed to Store shipping details.", e);
+//		}
+
 	}
 
 	private void connectToPaymentGateway(PaymentAuthorizationDTO paymentAuthorization) {

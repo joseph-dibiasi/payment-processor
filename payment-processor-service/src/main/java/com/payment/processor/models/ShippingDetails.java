@@ -1,11 +1,29 @@
 package com.payment.processor.models;
 
+import java.util.UUID;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+
 /**
- * Represents shipping/contact information sent from the client.
+ * Model representing shipping/contact information sent from the client.
+ *
+ * @author Joseph DiBiasi
+ * @version 1.0
  */
+@Entity
+@Table(name = "shipping_details")
 public class ShippingDetails {
 
-	private String fullName;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private UUID id;
+	private String firstName;
+	private String lastName;
 	private String email;
 	private String phone;
 	private String address;
@@ -16,13 +34,21 @@ public class ShippingDetails {
 
 	public ShippingDetails() {
 	}
-
-	public String getFullName() {
-		return fullName;
+	
+	public String getFirstName() {
+		return firstName;
+	}
+	
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public String getEmail() {

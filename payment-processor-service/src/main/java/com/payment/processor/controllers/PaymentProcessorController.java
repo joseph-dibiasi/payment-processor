@@ -12,9 +12,15 @@ import com.payment.processor.services.PaymentProcessorService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+/**
+ * RESTful controller class for connecting to PaymentProcessor UI.
+ *
+ * @author Joseph DiBiasi
+ * @version 1.0
+ */
 @RestController
 public class PaymentProcessorController {
-	private static final String BASE_URL = "/api/payment-processor";
+	private static final String BASE_URL = "/payment-processor";
 	private final PaymentProcessorService paymentProcessorService;
 
 	public PaymentProcessorController(PaymentProcessorService birdInTheHandService) {

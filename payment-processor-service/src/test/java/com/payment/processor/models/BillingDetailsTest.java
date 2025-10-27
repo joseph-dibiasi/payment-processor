@@ -3,13 +3,20 @@ package com.payment.processor.models;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class for BillingDetails model.
+ *
+ * @author Joseph DiBiasi
+ * @version 1.0
+ */
 class BillingDetailsTest {
 
     @Test
     void testDefaultConstructorAndGettersSetters() {
         BillingDetails billing = new BillingDetails();
 
-        billing.setFullName("John Doe");
+        billing.setFirstName("John");
+        billing.setLastName("Doe");        
         billing.setAddress("123 Main St");
         billing.setCity("New York");
         billing.setState("NY");
@@ -21,7 +28,8 @@ class BillingDetailsTest {
         billing.setCvv("123");
         billing.setPaymentRequested(100);
 
-        assertEquals("John Doe", billing.getFullName());
+        assertEquals("John", billing.getFirstName());
+        assertEquals("Doe", billing.getLastName());
         assertEquals("123 Main St", billing.getAddress());
         assertEquals("New York", billing.getCity());
         assertEquals("NY", billing.getState());
@@ -37,7 +45,8 @@ class BillingDetailsTest {
     @Test
     void testNullValues() {
         BillingDetails billing = new BillingDetails();
-        assertNull(billing.getFullName());
+        assertNull(billing.getFirstName());
+        assertNull(billing.getLastName());   
         assertNull(billing.getAddress());
         assertNull(billing.getCity());
         assertNull(billing.getState());
