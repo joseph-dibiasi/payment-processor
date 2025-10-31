@@ -35,7 +35,7 @@ public class BillingDetails {
     private String address;
     private String city;
     private String state;
-    private String zip;
+    private Integer zip;
     private String country;
 
     @Column(name = "card_number")
@@ -47,7 +47,7 @@ public class BillingDetails {
     @Column(name = "expiration_date")
     private String expirationDate;
 
-    private String cvv;
+    private Integer cvv;
 
     @Column(name = "amount_requested")
     private Integer amountRequested;
@@ -67,8 +67,8 @@ public class BillingDetails {
     public void setCity(String city) { this.city = city; }
     public String getState() { return state; }
     public void setState(String state) { this.state = state; }
-    public String getZip() { return zip; }
-    public void setZip(String zip) { this.zip = zip; }
+    public Integer getZip() { return zip; }
+    public void setZip(Integer zip) { this.zip = zip; }
     public String getCountry() { return country; }
     public void setCountry(String country) { this.country = country; }
     public String getCardNumber() { return cardNumber; }
@@ -77,8 +77,8 @@ public class BillingDetails {
     public void setCardName(String cardName) { this.cardName = cardName; }
     public String getExpiryDate() { return expirationDate; }
     public void setExpiryDate(String expirationDate) { this.expirationDate = expirationDate; }
-    public String getCvv() { return cvv; }
-    public void setCvv(String cvv) { this.cvv = cvv; }
+    public Integer getCvv() { return cvv; }
+    public void setCvv(Integer cvv) { this.cvv = cvv; }
     public Integer getAmountRequested() { return amountRequested; }
     public void setAmountRequested(Integer amountRequested) { this.amountRequested = amountRequested; }
 }

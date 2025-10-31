@@ -117,7 +117,7 @@ public class PaymentProcessorServiceImpl implements PaymentProcessorService {
 		if (isNullOrEmpty(paymentDetails.getState())) {
 			errors.add("Billing state is required.");
 		}
-		if (isNullOrEmpty(paymentDetails.getZip())) {
+		if (isNullOrEmpty(paymentDetails.getZip().toString())) {
 			errors.add("Billing zip is required.");
 		}
 		if (isNullOrEmpty(paymentDetails.getCountry())) {
@@ -132,7 +132,7 @@ public class PaymentProcessorServiceImpl implements PaymentProcessorService {
 		if (isNullOrEmpty(paymentDetails.getExpiryDate())) {
 			errors.add("Card expiration date is required.");
 		}
-		if (isNullOrEmpty(paymentDetails.getCvv())) {
+		if (isNullOrEmpty(paymentDetails.getCvv().toString())) {
 			errors.add("Card CVV is required.");
 		}
 		if (paymentDetails.getAmountRequested() == null || paymentDetails.getAmountRequested() <= 0) {
