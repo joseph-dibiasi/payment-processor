@@ -3,7 +3,11 @@ package com.payment.processor.models;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-
+/**
+ * Test class for ResponseObject.
+ * @author Joseph DiBiasi
+ * @version 1.0
+ */
 class ResponseObjectTest {
 
     @Test

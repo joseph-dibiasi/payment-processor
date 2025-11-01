@@ -2,9 +2,11 @@ package com.payment.processor.models;
 
 import java.util.UUID;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -20,7 +22,9 @@ import jakarta.persistence.Table;
 public class ShippingDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 	private String firstName;
 	private String lastName;
@@ -35,6 +39,14 @@ public class ShippingDetails {
 	public ShippingDetails() {
 	}
 	
+	public UUID getId() {
+		return id;
+	}
+
+	public void setId(UUID id) {
+		this.id = id;
+	}
+
 	public String getFirstName() {
 		return firstName;
 	}

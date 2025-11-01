@@ -24,7 +24,7 @@ class BillingDetailsTest {
         billing.setCountry("USA");
         billing.setCardNumber("4111111111111111");
         billing.setCardName("John Doe");
-        billing.setExpiryDate("12/25");
+        billing.setExpirationDate("12/25");
         billing.setCvv(123);
         billing.setAmountRequested(100);
 
@@ -33,11 +33,11 @@ class BillingDetailsTest {
         assertEquals("123 Main St", billing.getAddress());
         assertEquals("New York", billing.getCity());
         assertEquals("NY", billing.getState());
-        assertEquals("10001", billing.getZip());
+        assertEquals(10001, billing.getZip());
         assertEquals("USA", billing.getCountry());
         assertEquals("4111111111111111", billing.getCardNumber());
         assertEquals("John Doe", billing.getCardName());
-        assertEquals("12/25", billing.getExpiryDate());
+        assertEquals("12/25", billing.getExpirationDate());
         assertEquals(123, billing.getCvv());
         assertEquals(100, billing.getAmountRequested());
     }
@@ -54,7 +54,7 @@ class BillingDetailsTest {
         assertNull(billing.getCountry());
         assertNull(billing.getCardNumber());
         assertNull(billing.getCardName());
-        assertNull(billing.getExpiryDate());
+        assertNull(billing.getExpirationDate());
         assertNull(billing.getCvv());
         assertNull(billing.getAmountRequested());
     }

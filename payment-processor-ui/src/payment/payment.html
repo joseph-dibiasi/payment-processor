@@ -233,11 +233,11 @@
         />
       </div>
       <div>
-        <label for="expiryDate">Expiry Date</label>
+        <label for="expirationDate">Expiry Date</label>
         <input
-          id="expiryDate"
-          name="expiryDate"
-          [(ngModel)]="formModel.expiryDate"
+          id="expirationDate"
+          name="expirationDate"
+          [(ngModel)]="formModel.expirationDate"
           placeholder="MM/YY"
           required
         />
@@ -253,10 +253,12 @@
         />
       </div>
     </section>
-    <button>Cancel</button>
-    <button type="submit" [disabled]="!checkoutForm.form.valid">
-      Checkout
-    </button>
-    <!-- <button type="submit">Checkout</button> -->
+    <span>
+      <button>Cancel</button>
+      <button type="submit" [disabled]="!checkoutForm.form.valid">
+        Checkout
+      </button>
+      <button type="button" style="float: right;" (click)="settleAuthorizedPayments()">Settle Payments</button>
+    </span>
   </form>
 </div>

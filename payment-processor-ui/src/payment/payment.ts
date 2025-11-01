@@ -14,6 +14,17 @@ export class Payment {
   title = 'payment-processor';
   defaultTestData = false;
   sameAsShipping = false;
+    /*
+     * Backend endpoint (matches server-side controller mapping)
+     */
+    url = '/payment-processor/v1';
+
+    /*
+    * Headers specificying content type and initial mock up of auth token.
+    */ 
+    headers = new HttpHeaders()
+      .set('Authorization', 'Bearer authToken123')
+      .set('Content-Type', 'application/json');
 
   testShippingDetails = {
     firstName: 'John',
@@ -37,7 +48,7 @@ export class Payment {
     country: 'USA',
     cardNumber: '1111-1111-1111-1111',
     cardName: 'John Doe',
-    expiryDate: '12/25',
+    expirationDate: '12/25',
     cvv: '123',
     amountRequested: 49.99,
   };
@@ -61,7 +72,7 @@ export class Payment {
     billingCountry: '',
     cardNumber: '',
     cardName: '',
-    expiryDate: '',
+    expirationDate: '',
     cvv: '',
     amountRequested: 0,
   };
@@ -121,7 +132,7 @@ export class Payment {
 
       this.formModel.cardNumber = this.testBillingDetails.cardNumber;
       this.formModel.cardName = this.testBillingDetails.cardName;
-      this.formModel.expiryDate = this.testBillingDetails.expiryDate;
+      this.formModel.expirationDate = this.testBillingDetails.expirationDate;
       this.formModel.cvv = this.testBillingDetails.cvv;
       this.formModel.amountRequested =
         this.testBillingDetails.amountRequested;
@@ -145,7 +156,7 @@ export class Payment {
         billingCountry: '',
         cardNumber: '',
         cardName: '',
-        expiryDate: '',
+        expirationDate: '',
         cvv: '',
         amountRequested: 0,
       };
@@ -193,7 +204,7 @@ export class Payment {
         (this.sameAsShipping ? shippingDetails.country : ''),
       cardNumber: v.cardNumber || '',
       cardName: v.cardName || '',
-      expiryDate: v.expiryDate || '',
+      expirationDate: v.expirationDate || '',
       cvv: v.cvv || '',
       amountRequested: v.amountRequested || 0,
     };
@@ -203,24 +214,28 @@ export class Payment {
       billingDetails,
     };
 
-    /*
-     * Backend endpoint (matches server-side controller mapping)
-     */
-    const url = '/payment-processor/make-payment';
+    let headers = this.headers;
 
-    /*
-    * Headers specificying content type and initial mock up of auth token.
-    */ 
-    const headers = new HttpHeaders()
-      .set('Authorization', 'Bearer authToken123')
-      .set('Content-Type', 'application/json');
-
-    this.http.post(url, payload, { headers }).subscribe({
+    this.http.post(this.url + "/make-payment", payload, { headers }).subscribe({
       next: (res) => {
         console.log('Payment authorization response:', res);
       },
       error: (err) => {
         console.error('Payment authorization failed:', err);
+      },
+    });
+  }
+
+  // Manually initiate payment settlement process.
+  settleAuthorizedPayments() {
+    let headers = this.headers;
+
+    this.http.get(this.url + "/settle-payments", { headers }).subscribe({
+      next: (res) => {
+        console.log('Payment Settlement Successful:', res);
+      },
+      error: (err) => {
+        console.error('Payment Settlement Failed:', err);
       },
     });
   }
