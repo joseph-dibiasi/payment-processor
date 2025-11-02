@@ -232,7 +232,8 @@ export class Payment {
 
     this.http.get(this.url + "/settle-payments", { headers }).subscribe({
       next: (res) => {
-        console.log('Payment Settlement Successful:', res);
+        console.log('Payment Settlement Successful:');
+        console.log(res);
       },
       error: (err) => {
         console.error('Payment Settlement Failed:', err);
