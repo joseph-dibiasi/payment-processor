@@ -55,6 +55,18 @@ public class PaymentProcessorServiceImpl implements PaymentProcessorService {
 		 */
 		storePaymentAuthorizationResults(paymentAuthorization);
 	}
+	
+	private void connectToPaymentGateway(PaymentAuthorizationDTO paymentAuthorization) {
+		// Third-party credit card network integration logic here.
+		try {
+			System.out.println("Successfully Authorized Payment.");
+			paymentAuthorization.getBillingDetails().setAuthorized(Boolean.TRUE);
+			paymentAuthorization.getBillingDetails().setSettled(Boolean.FALSE);
+			paymentAuthorization.getBillingDetails().setBillingDate(LocalDateTime.now());
+		} catch (Exception e) {
+			paymentAuthorization.getBillingDetails().setAuthorized(Boolean.FALSE);
+		}
+	}
 
 	private void storePaymentAuthorizationResults(PaymentAuthorizationDTO paymentAuthorization) {
 		/*
@@ -68,18 +80,6 @@ public class PaymentProcessorServiceImpl implements PaymentProcessorService {
 			throw new RuntimeException("Error Saving Payment Details:", e);
 		}
 
-	}
-
-	private void connectToPaymentGateway(PaymentAuthorizationDTO paymentAuthorization) {
-		// Third-party credit card network integration logic here.
-		try {
-			System.out.println("Successfully Authorized Payment.");
-			paymentAuthorization.getBillingDetails().setAuthorized(Boolean.TRUE);
-			paymentAuthorization.getBillingDetails().setSettled(Boolean.FALSE);
-			paymentAuthorization.getBillingDetails().setBillingDate(LocalDateTime.now());
-		} catch (Exception e) {
-			paymentAuthorization.getBillingDetails().setAuthorized(Boolean.FALSE);
-		}
 	}
 
 	private List<BillingDetails> settleAuthorizedPayments(List<BillingDetails> settleClaims) {
@@ -195,7 +195,7 @@ public class PaymentProcessorServiceImpl implements PaymentProcessorService {
 		if (paymentDetails.getCvv() == null) {
 			errors.add("Card CVV is required.");
 		}
-		if (paymentDetails.getAmountRequested() == null || paymentDetails.getAmountRequested() <= 0) {
+		if (paymentDetails.getAmountRequested() == null) {
 			errors.add("No payment amount requested.");
 		}
 		return errors;

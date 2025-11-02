@@ -1,5 +1,6 @@
 package com.payment.processor.models;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -72,8 +73,8 @@ public class BillingDetails {
 
 	private Integer cvv;
 
-	@Column(name = "amount_requested")
-	private Integer amountRequested;
+	@Column(name = "amount_requested", precision = 12, scale = 2)
+	private BigDecimal amountRequested;
 
 	public BillingDetails() {
 	}
@@ -166,11 +167,11 @@ public class BillingDetails {
 		this.cvv = cvv;
 	}
 
-	public Integer getAmountRequested() {
+	public BigDecimal getAmountRequested() {
 		return amountRequested;
 	}
 
-	public void setAmountRequested(Integer amountRequested) {
+	public void setAmountRequested(BigDecimal amountRequested) {
 		this.amountRequested = amountRequested;
 	}
 
